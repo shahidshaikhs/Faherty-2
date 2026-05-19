@@ -36,6 +36,23 @@
   </announcement-bar-component>
 </aside>
 
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --letter-spacing--body-loose: 1px;
+  }
+
+  #shopify-section-{{ section.id }} .announcement-bar {
+    padding-inline: 20px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .announcement-bar {
+      padding-block: 10px;
+      padding-inline: 0;
+    }
+  }
+{% endstyle %}
+
 {% stylesheet %}
   .announcement-bar {
     border-block-end: var(--border-bottom-width) solid var(--color-border);
