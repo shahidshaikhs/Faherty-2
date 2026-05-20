@@ -444,7 +444,9 @@
     "showcase_card": "Showcase card",
     "collection_list_tabs": "Collection list tabs",
     "collection_list_tab": "Tab",
-    "collection_list_tab_card": "Collection card"
+    "collection_list_tab_card": "Collection card",
+    "homepage_slideshow": "Homepage slideshow",
+    "panel": "Panel"
   },
   "options": {
     "above_carousel": "Above carousel",

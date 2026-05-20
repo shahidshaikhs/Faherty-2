@@ -1,0 +1,395 @@
+{%- liquid
+  assign overlay_color_rgb = section.settings.overlay_color | color_to_rgb | remove: 'rgb(' | remove: ')' | strip
+  assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0
+-%}
+
+<div
+  id="HomepageSlideshow-{{ section.id }}"
+  class="homepage-slideshow color-{{ section.settings.color_scheme }} section section--{{ section.settings.section_width }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div
+    class="homepage-slideshow__grid"
+    data-testid="homepage-slideshow-grid"
+  >
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'panel' -%}
+        <div
+          class="homepage-slideshow__panel"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {%- assign sizes_val = '(min-width: 750px) 33vw, 100vw' -%}
+            {{
+              block.settings.image
+              | image_url: width: block.settings.image.width
+              | image_tag:
+                sizes: sizes_val,
+                widths: '375,550,750,1100,1500',
+                loading: 'eager',
+                fetchpriority: 'high',
+                class: 'homepage-slideshow__image',
+                alt: block.settings.image.alt
+            }}
+          {%- else -%}
+            <div class="homepage-slideshow__placeholder">
+              {{ 'image' | placeholder_svg_tag: 'homepage-slideshow__placeholder-svg' }}
+            </div>
+          {%- endif -%}
+
+          <div class="homepage-slideshow__overlay"></div>
+
+          <div class="homepage-slideshow__content">
+            <div class="homepage-slideshow__prose">
+              {%- if block.settings.subheading != blank -%}
+                <p class="homepage-slideshow__subheading">
+                  {{- block.settings.subheading | escape -}}
+                </p>
+              {%- endif -%}
+
+              {%- if block.settings.heading != blank -%}
+                <p class="homepage-slideshow__heading">
+                  {{- block.settings.heading | escape -}}
+                </p>
+              {%- endif -%}
+
+              {%- if block.settings.button_label != blank -%}
+                <div class="homepage-slideshow__cta-wrapper">
+                  {%- if block.settings.button_link != blank -%}
+                    <a
+                      href="{{ block.settings.button_link }}"
+                      class="homepage-slideshow__cta"
+                    >
+                      {{- block.settings.button_label | escape -}}
+                    </a>
+                  {%- else -%}
+                    <span class="homepage-slideshow__cta">
+                      {{- block.settings.button_label | escape -}}
+                    </span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% style %}
+  #HomepageSlideshow-{{ section.id }} {
+    --panel-height-desktop: {{ section.settings.section_height_desktop }}px;
+    --panel-height-mobile: {{ section.settings.section_height_mobile }}px;
+    --overlay-color-rgb: {{ overlay_color_rgb }};
+    --overlay-opacity: {{ overlay_opacity }};
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .homepage-slideshow {
+    position: relative;
+  }
+
+  .homepage-slideshow__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @media screen and (min-width: 750px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .homepage-slideshow__panel {
+    position: relative;
+    overflow: hidden;
+    height: var(--panel-height-mobile, 520px);
+
+    @media screen and (min-width: 750px) {
+      height: var(--panel-height-desktop, 640px);
+    }
+  }
+
+  .homepage-slideshow__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .homepage-slideshow__placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(242, 242, 242);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .homepage-slideshow__placeholder-svg {
+    width: 50%;
+    height: 50%;
+  }
+
+  .homepage-slideshow__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgba(var(--overlay-color-rgb), var(--overlay-opacity));
+    pointer-events: none;
+  }
+
+  .homepage-slideshow__content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  .homepage-slideshow__prose {
+    max-width: 350px;
+    text-align: center;
+
+    @media screen and (min-width: 750px) {
+      max-width: 384px;
+    }
+  }
+
+  .homepage-slideshow__subheading {
+    font-family: var(--font-subheading--family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin: 0;
+
+    @media screen and (min-width: 750px) {
+      font-size: 16px;
+    }
+  }
+
+  .homepage-slideshow__heading {
+    font-family: var(--font-heading--family);
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin: 12px 0 0;
+
+    @media screen and (min-width: 750px) {
+      font-size: 36px;
+      margin-block-start: 24px;
+    }
+  }
+
+  .homepage-slideshow__cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-block-start: 20px;
+
+    @media screen and (min-width: 750px) {
+      margin-block-start: 24px;
+    }
+  }
+
+  .homepage-slideshow__cta {
+    display: inline-block;
+    font-family: var(--font-subheading--family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.28;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    pointer-events: auto;
+    position: relative;
+    padding-block-end: 4px;
+    border-bottom: 1px solid currentColor;
+
+    @media screen and (min-width: 750px) {
+      font-size: 16px;
+    }
+  }
+
+  .homepage-slideshow__cta:hover {
+    opacity: 0.8;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.homepage_slideshow",
+  "tag": "section",
+  "class": "homepage-slideshow-wrapper section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "section_height_desktop",
+      "label": "Panel height (desktop)",
+      "default": 640
+    },
+    {
+      "type": "number",
+      "id": "section_height_mobile",
+      "label": "Panel height (mobile)",
+      "default": 520
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "full-width", "label": "Full width" },
+        { "value": "page-width", "label": "Page width" }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "t:names.panel",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "LEARN MORE"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.homepage_slideshow",
+      "settings": {
+        "section_width": "full-width",
+        "section_height_desktop": 640,
+        "section_height_mobile": 520,
+        "overlay_opacity": 30,
+        "overlay_color": "#000000",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "subheading": "Come see us",
+            "heading": "Find a Store",
+            "button_label": "VISIT US"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "subheading": "Our Commitment to",
+            "heading": "Sustainability & Social Responsibility",
+            "button_label": "LEARN MORE"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "subheading": "Partnering With",
+            "heading": "Native Designers",
+            "button_label": "SHOP NOW"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

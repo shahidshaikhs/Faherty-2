@@ -414,6 +414,54 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "homepage_slideshow": {
+      "type": "homepage-slideshow",
+      "settings": {
+        "section_width": "full-width",
+        "section_height_desktop": 640,
+        "section_height_mobile": 520,
+        "overlay_color": "#000000",
+        "overlay_opacity": 30,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": {
+        "panel_1": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/faherty-store-locations-92c4285d-5cab-4ed5-b51f-69e88c059869-6c477d6a9359.jpg",
+            "subheading": "Come see us",
+            "heading": "Find a Store",
+            "button_label": "VISIT US",
+            "button_link": "\/pages\/store-locator"
+          }
+        },
+        "panel_2": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/social-and-environmental-impact-9c828a91-47f9-4ce1-86b8-1873-90ac11ceb618.jpg",
+            "subheading": "Our Commitment to",
+            "heading": "Sustainability & Social Responsibility",
+            "button_label": "LEARN MORE"
+          }
+        },
+        "panel_3": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/native-designs-074ac6ec-e698-4ad7-8a75-b7a2a8a3137c-f5137f30abc1.jpg",
+            "subheading": "Partnering With",
+            "heading": "Native Designers",
+            "button_label": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "panel_1",
+        "panel_2",
+        "panel_3"
+      ]
     }
   },
   "order": [
@@ -422,6 +470,7 @@
     "collection_list_tabs",
     "rich_text_byronbay",
     "product_showcase_cards_Dpt01",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "homepage_slideshow"
   ]
 }
