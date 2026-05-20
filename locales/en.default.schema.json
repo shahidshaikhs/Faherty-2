@@ -439,7 +439,9 @@
     "comparison_slider": "Comparison slider",
     "banner_hero": "Banner hero",
     "hero_video": "Hero video",
-    "collection_slider": "Collection slider"
+    "collection_slider": "Collection slider",
+    "product_showcase_cards": "Product showcase cards",
+    "showcase_card": "Showcase card"
   },
   "options": {
     "above_carousel": "Above carousel",

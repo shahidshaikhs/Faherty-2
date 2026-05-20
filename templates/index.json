@@ -74,6 +74,42 @@
         "padding-block-end": 50
       }
     },
+    "product_showcase_cards_Dpt01": {
+      "type": "product-showcase-cards",
+      "blocks": {
+        "card_left": {
+          "type": "card",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/m-linen-shop-01e5ebbf526a.jpg",
+            "heading": "Men's Linen",
+            "button_text": "Shop Now"
+          }
+        },
+        "card_right": {
+          "type": "card",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/w-linen-shop-55229cce-fb4d-41a3-9738-a15a2a023098-8fa13c793a14.jpg",
+            "heading": "Women's Linen",
+            "button_text": "Shop Now"
+          }
+        }
+      },
+      "block_order": [
+        "card_left",
+        "card_right"
+      ],
+      "settings": {
+        "card_height_desktop": 960,
+        "card_height_mobile": 520,
+        "gap": 0,
+        "section_width": "full-width",
+        "overlay_color": "#1e2020",
+        "overlay_opacity": 10,
+        "color_scheme": "scheme-6",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -273,6 +309,7 @@
     "banner_hero_HxK3mP",
     "hero_video_FhRt01",
     "rich_text_byronbay",
+    "product_showcase_cards_Dpt01",
     "product_list_fa6P9H"
   ]
 }
