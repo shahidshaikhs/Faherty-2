@@ -438,7 +438,8 @@
     "pills": "Pills",
     "comparison_slider": "Comparison slider",
     "banner_hero": "Banner hero",
-    "hero_video": "Hero video"
+    "hero_video": "Hero video",
+    "collection_slider": "Collection slider"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -815,6 +816,8 @@
     "case": "Case",
     "checkout_buttons": "Accelerated checkout buttons",
     "collection": "Collection",
+    "collection_1": "Collection 1",
+    "collection_2": "Collection 2",
     "collection_count": "Collection count",
     "collection_list": "Collections",
     "collection_templates": "Collection templates",
@@ -1081,6 +1084,8 @@
     "shape": "Shape",
     // Checkbox label to toggle visibility of UI elements
     "show": "Show",
+    "shop_all_label": "Shop all label",
+    "show_heading": "Show heading",
     "show_as_accordion": "Show as accordion on mobile",
     "show_author": "Author",
     "show_alignment": "Show alignment",
@@ -1117,6 +1122,8 @@
     "submenu_size": "Submenu size",
     "success_color": "Success",
     "swatches": "Swatches",
+    "tab_1_label": "Tab 1 label",
+    "tab_2_label": "Tab 2 label",
     "tertiary_font": "Tertiary font",
     // Generic label for text-related settings (content or color)
     "text": "Text",
