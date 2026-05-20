@@ -60,7 +60,9 @@
           }
         }
       },
-      "block_order": ["text"],
+      "block_order": [
+        "text"
+      ],
       "settings": {
         "content_direction": "column",
         "horizontal_alignment_flex_direction_column": "center",
