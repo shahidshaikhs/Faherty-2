@@ -1,13 +1,4 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
- {
+{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -16,7 +7,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
+            "text": "<p>Browse our latest products<\/p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -43,7 +34,7 @@
           "name": "t:names.button",
           "settings": {
             "label": "Shop all",
-            "link": "shopify://collections/all",
+            "link": "shopify:\/\/collections\/all",
             "open_in_new_tab": false,
             "style_class": "button-secondary",
             "width": "fit-content",
@@ -127,7 +118,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "text": "<h3>{{ closest.collection.title }}<\/h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
