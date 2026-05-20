@@ -34,6 +34,44 @@
         "show_video_toggle": true
       }
     },
+    "rich_text_byronbay": {
+      "type": "section",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Summer 2026 takes us to Byron Bay, where living well has always meant slowing down and staying close to the water. Shop new arrivals made for that kind of summer.<\/p>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        }
+      },
+      "block_order": ["text"],
+      "settings": {
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "",
+        "color_scheme": "scheme-8",
+        "padding-block-start": 50,
+        "padding-block-end": 50
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -232,6 +270,7 @@
   "order": [
     "banner_hero_HxK3mP",
     "hero_video_FhRt01",
+    "rich_text_byronbay",
     "product_list_fa6P9H"
   ]
 }
