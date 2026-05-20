@@ -151,7 +151,8 @@
     "width": "Width",
     "width_is_automatically_optimized": "Width is automatically optimized for mobile.",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
-    "navigation": "Navigation"
+    "navigation": "Navigation",
+    "wishlist": "Wishlist"
   },
   "html_defaults": {
     "join_our_email_list": "<h2>Join our email list</h2>",
@@ -1089,6 +1090,7 @@
     "show_powered_by_shopify": "Show \"Powered by Shopify\"",
     "show_sale_price_first": "Show sale price first",
     "show_search": "Show search",
+    "show_wishlist": "Show wishlist icon",
     "show_second_image_on_hover": "Show second image on hover",
     "show_swatch_label": "Text labels for swatches",
     "show_tax_info": "Tax information",
@@ -1174,7 +1176,8 @@
     "cs_slider_inner_color": "Slider inner color",
     "text_on_images": "Text on images",
     "x_position": "Horizontal position",
-    "y_position": "Vertical position"
+    "y_position": "Vertical position",
+    "wishlist_url": "Wishlist URL"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

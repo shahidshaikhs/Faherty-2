@@ -1104,6 +1104,53 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* Faherty header overrides */
+  .header .header__columns {
+    --padding-block-start: 22px;
+    --padding-block-end: 21px;
+  }
+
+  .header .header-actions__action:not(.account-button) svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .header .header-actions__action:not(.account-button) .svg-wrapper {
+    width: 26px;
+    height: 26px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header .header__columns {
+      grid-gap: 40px;
+    }
+  }
+
+  .header .header__column--right {
+    gap: 10px;
+  }
+
+  #header-component .header__column--right header-actions {
+    margin-inline-start: 0;
+    gap: 10px;
+  }
+
+  .header .menu-list__link-title {
+    letter-spacing: 1.2px;
+  }
+
+  .header-actions__wishlist .svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .header .header__columns {
+      padding-inline: 0 var(--padding-3xs);
+    }
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1354,6 +1401,22 @@
       ],
       "default": "top",
       "visible_if": "{{ section.settings.show_country or section.settings.show_language }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.wishlist"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "t:settings.show_wishlist",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "t:settings.wishlist_url",
+      "visible_if": "{{ section.settings.show_wishlist }}"
     },
     {
       "type": "header",
