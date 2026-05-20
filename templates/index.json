@@ -34,6 +34,117 @@
         "show_video_toggle": true
       }
     },
+    "collection_list_tabs": {
+      "type": "collection-list-tabs",
+      "settings": {
+        "gap": 20,
+        "card_height": 700,
+        "card_height_mobile": 485,
+        "show_arrows": true,
+        "color_scheme": "scheme-1",
+        "section_width": "full-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "tab-mens": {
+          "type": "_collection-list-tab",
+          "settings": {
+            "tab_label": "Men's"
+          },
+          "blocks": {
+            "mens-card-1": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/m-shirts-ec6f6f65-0285-40ec-a4ad-58b8df893f78-18b55446adb7.jpg",
+                "label": "Shirts",
+                "link": "\/collections\/mens-shirt-guide"
+              }
+            },
+            "mens-card-2": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/m-shorts-f7797dbc-167b-4e25-94ea-42d743a55013-c2b75dcff749.jpg",
+                "label": "Shorts",
+                "link": "\/pages\/mens-short-guide"
+              }
+            },
+            "mens-card-3": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/m-swim-54068a7c-dfa2-4ecf-a76a-b0d445bf6518-373716987489.jpg",
+                "label": "Swim",
+                "link": "\/pages\/mens-swim-guide"
+              }
+            },
+            "mens-card-4": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/m-tees-c213bbc1-d7cf-45e1-8279-7100b6605baa-aa1426357822.jpg",
+                "label": "Tees",
+                "link": "\/pages\/mens-tee-shop"
+              }
+            }
+          },
+          "block_order": [
+            "mens-card-1",
+            "mens-card-2",
+            "mens-card-3",
+            "mens-card-4"
+          ]
+        },
+        "tab-womens": {
+          "type": "_collection-list-tab",
+          "settings": {
+            "tab_label": "Women's"
+          },
+          "blocks": {
+            "womens-card-1": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/w-swim-76309b52-d67b-4428-b7f1-3ec4f164f3e1-d66a0c29498d.jpg",
+                "label": "Swim",
+                "link": "\/collections\/womens-swim"
+              }
+            },
+            "womens-card-2": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/w-tees-and-tanks-01f44e6e-e311-461b-97c0-3a156f7665d9-316987b1a607.jpg",
+                "label": "Tees & Tanks",
+                "link": "\/collections\/womens-tees-tanks"
+              }
+            },
+            "womens-card-3": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/w-dresses-711addd9-82c2-43e5-b7dd-3b57832f51eb-4ad305147f34.jpg",
+                "label": "Dresses",
+                "link": "\/collections\/womens-dresses"
+              }
+            },
+            "womens-card-4": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "image": "shopify:\/\/shop_images\/w-shorts-a795289b-7eff-4e8c-845c-ad437d76eafe-d71ef686b97d.jpg",
+                "label": "Shorts",
+                "link": "\/collections\/womens-shorts"
+              }
+            }
+          },
+          "block_order": [
+            "womens-card-1",
+            "womens-card-2",
+            "womens-card-3",
+            "womens-card-4"
+          ]
+        }
+      },
+      "block_order": [
+        "tab-mens",
+        "tab-womens"
+      ]
+    },
     "rich_text_byronbay": {
       "type": "section",
       "blocks": {
@@ -308,6 +419,7 @@
   "order": [
     "banner_hero_HxK3mP",
     "hero_video_FhRt01",
+    "collection_list_tabs",
     "rich_text_byronbay",
     "product_showcase_cards_Dpt01",
     "product_list_fa6P9H"

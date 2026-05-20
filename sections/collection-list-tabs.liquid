@@ -1,0 +1,575 @@
+{%- liquid
+  assign tab_blocks = section.blocks | where: 'type', '_collection-list-tab'
+  assign section_width = section.settings.section_width | default: 'full-width'
+  assign color_scheme = section.settings.color_scheme | default: 'scheme-1'
+  assign show_arrows = section.settings.show_arrows
+-%}
+
+<collection-list-tabs data-testid="collection-list-tabs">
+  <div
+    class="section section--{{ section_width }} color-{{ color_scheme }} spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+  <div class="collection-list-tabs__wrapper collection-list-tabs__animate">
+    {%- if tab_blocks.size > 0 -%}
+      <div class="collection-list-tabs__tab-header">
+        <div class="collection-list-tabs__tab-buttons" role="tablist">
+          {%- for tab_block in tab_blocks -%}
+            <button
+              ref="tab"
+              role="tab"
+              type="button"
+              class="collection-list-tabs__tab-button{% if forloop.first %} active{% endif %}"
+              aria-selected="{{ forloop.first }}"
+              aria-controls="panel-{{ tab_block.id }}"
+              data-index="{{ forloop.index0 }}"
+              on:click="/handleTabClick"
+            >
+              {{- tab_block.settings.tab_label | escape -}}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="collection-list-tabs__panels-container">
+      <div class="collection-list-tabs__panels" data-panel-count="{{ tab_blocks.size }}">
+        {% content_for 'blocks' %}
+      </div>
+
+      <div class="collection-list-tabs__scrollbar">
+        <div class="collection-list-tabs__progress-track" ref="progressTrack">
+          <div class="collection-list-tabs__progress-bar" ref="progressBar"></div>
+        </div>
+
+        {%- if show_arrows -%}
+          <div class="collection-list-tabs__arrow-buttons">
+            <button
+              type="button"
+              class="collection-list-tabs__arrow-btn collection-list-tabs__arrow-btn--prev"
+              ref="prevBtn"
+              on:click="/handlePrevClick"
+              aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+            >
+              <span class="collection-list-tabs__arrow-icon collection-list-tabs__arrow-icon--flip">
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            </button>
+            <button
+              type="button"
+              class="collection-list-tabs__arrow-btn collection-list-tabs__arrow-btn--next"
+              ref="nextBtn"
+              on:click="/handleNextClick"
+              aria-label="{{ 'accessibility.slideshow_next' | t }}"
+            >
+              <span class="collection-list-tabs__arrow-icon">
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  </div>
+</collection-list-tabs>
+
+{% style %}
+  .shopify-section-{{ section.id }} collection-list-tabs {
+    --clt-gap: {{ section.settings.gap | default: 20 }}px;
+    --clt-card-height: {{ section.settings.card_height | default: 700 }}px;
+    --clt-card-height-mobile: {{ section.settings.card_height_mobile | default: 485 }}px;
+    --clt-inline-padding: 48px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .shopify-section-{{ section.id }} collection-list-tabs {
+      --clt-inline-padding: 20px;
+    }
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  /* Collection List Tabs — Section Wrapper */
+  collection-list-tabs {
+    display: block;
+  }
+
+  .collection-list-tabs__wrapper {
+    padding-inline: var(--clt-inline-padding, 48px);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .collection-list-tabs__wrapper.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .collection-list-tabs__wrapper {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Tab Header */
+  .collection-list-tabs__tab-header {
+    display: flex;
+    margin-block-end: 16px;
+  }
+
+  .collection-list-tabs__tab-buttons {
+    display: flex;
+    position: relative;
+  }
+
+  .collection-list-tabs__tab-buttons::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 2px;
+    background: rgb(224, 227, 227);
+  }
+
+  /* Tab Buttons */
+  .collection-list-tabs__tab-button {
+    position: relative;
+    padding-block-start: 0;
+    padding-block-end: 8px;
+    padding-inline-start: 0;
+    padding-inline-end: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    line-height: 22.4px;
+    color: rgb(106, 106, 109);
+    transition: color 0.2s ease;
+  }
+
+  .collection-list-tabs__tab-button:first-child {
+    padding-inline-end: 10px;
+    padding-inline-start: 0;
+  }
+
+  .collection-list-tabs__tab-button:last-child {
+    padding-inline-end: 0;
+    padding-inline-start: 10px;
+  }
+
+  .collection-list-tabs__tab-button::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-foreground);
+    z-index: 1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-list-tabs__tab-button.active {
+    color: var(--color-foreground);
+  }
+
+  .collection-list-tabs__tab-button.active::after {
+    transform: scaleX(1);
+  }
+
+  .collection-list-tabs__tab-button:hover {
+    color: var(--color-foreground);
+  }
+
+  .collection-list-tabs__tab-button:focus-visible {
+    outline: 1px auto rgb(0, 95, 204);
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-list-tabs__tab-button {
+      font-size: 14px;
+      line-height: 16.8px;
+    }
+
+    .collection-list-tabs__tab-button:first-child {
+      padding-inline-end: 5px;
+    }
+
+    .collection-list-tabs__tab-button:last-child {
+      padding-inline-start: 5px;
+    }
+  }
+
+  /* Panels */
+  .collection-list-tabs__panel[hidden] {
+    display: none;
+  }
+
+  .collection-list-tabs__panels-container {
+    position: relative;
+  }
+
+  /* Scroll Area — bleed pattern */
+  .collection-list-tabs__scroll-area {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * var(--clt-inline-padding, 48px));
+    padding-inline: var(--clt-inline-padding, 48px);
+  }
+
+  .collection-list-tabs__scroll-area::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cards Container */
+  .collection-list-tabs__cards {
+    display: flex;
+    gap: var(--clt-gap, 20px);
+    flex-wrap: nowrap;
+  }
+
+  /* Individual Card */
+  .collection-list-tabs__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 calc((100% - 2 * var(--clt-gap, 20px)) / 3);
+    scroll-snap-align: start;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-foreground);
+    flex-shrink: 0;
+  }
+
+  .collection-list-tabs__card:focus-visible {
+    outline: 1px auto rgb(0, 95, 204);
+    outline-offset: 1px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-list-tabs__card {
+      flex: 0 0 80%;
+      scroll-snap-align: center;
+    }
+  }
+
+  /* Card Media */
+  .collection-list-tabs__card-media {
+    position: relative;
+    width: 100%;
+    height: var(--clt-card-height, 700px);
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-list-tabs__card-media {
+      height: var(--clt-card-height-mobile, 485px);
+    }
+  }
+
+  .collection-list-tabs__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-list-tabs__card-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-list-tabs__card-placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Card Content */
+  .collection-list-tabs__card-content {
+    margin-block-start: 30px;
+    transition: transform 0.2s ease;
+  }
+
+  .collection-list-tabs__card:hover .collection-list-tabs__card-content {
+    transform: translateY(-2px);
+  }
+
+  .collection-list-tabs__card-label {
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    line-height: 19.2px;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  /* Scrollbar & Progress */
+  .collection-list-tabs__scrollbar {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-block-start: 16px;
+  }
+
+  .collection-list-tabs__progress-track {
+    position: relative;
+    flex: 1;
+    height: 2px;
+    background: rgba(30, 32, 32, 0.1);
+  }
+
+  .collection-list-tabs__progress-bar {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--color-foreground);
+    transition: width 0.1s linear;
+  }
+
+  /* Arrow Buttons */
+  .collection-list-tabs__arrow-buttons {
+    display: flex;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .collection-list-tabs__arrow-btn {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--color-foreground);
+    background: rgb(233, 226, 209);
+    box-shadow: rgb(233, 226, 209) 0px 0px 0px 5px;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.15s ease-in;
+  }
+
+  .collection-list-tabs__arrow-btn:focus-visible {
+    outline: 1px auto rgb(0, 95, 204);
+  }
+
+  .collection-list-tabs__arrow-icon {
+    display: grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+  }
+
+  .collection-list-tabs__arrow-icon svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+  }
+
+  .collection-list-tabs__arrow-icon--flip {
+    transform: rotate(180deg);
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-list-tabs__arrow-buttons {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+<script src="{{ 'collection-list-tabs.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "t:names.collection_list_tabs",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "_collection-list-tab"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "number",
+      "id": "card_height",
+      "label": "t:settings.card_height",
+      "default": 700
+    },
+    {
+      "type": "number",
+      "id": "card_height_mobile",
+      "label": "t:settings.card_height_mobile",
+      "default": 485
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "t:settings.show_arrows",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 48,
+      "unit": "px"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "presets": [
+    {
+      "name": "t:names.collection_list_tabs",
+      "settings": {
+        "gap": 20,
+        "card_height": 700,
+        "card_height_mobile": 485,
+        "show_arrows": true,
+        "color_scheme": "scheme-1",
+        "section_width": "full-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "tab_1": {
+          "type": "_collection-list-tab",
+          "settings": {
+            "tab_label": "Men's"
+          },
+          "blocks": {
+            "card_1": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Shirts"
+              }
+            },
+            "card_2": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Shorts"
+              }
+            },
+            "card_3": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Swim"
+              }
+            },
+            "card_4": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Tees"
+              }
+            }
+          },
+          "block_order": ["card_1", "card_2", "card_3", "card_4"]
+        },
+        "tab_2": {
+          "type": "_collection-list-tab",
+          "settings": {
+            "tab_label": "Women's"
+          },
+          "blocks": {
+            "card_5": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Swim"
+              }
+            },
+            "card_6": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Tees & Tanks"
+              }
+            },
+            "card_7": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Dresses"
+              }
+            },
+            "card_8": {
+              "type": "_collection-list-tab-card",
+              "settings": {
+                "label": "Shorts"
+              }
+            }
+          },
+          "block_order": ["card_5", "card_6", "card_7", "card_8"]
+        }
+      },
+      "block_order": ["tab_1", "tab_2"]
+    }
+  ]
+}
+{% endschema %}

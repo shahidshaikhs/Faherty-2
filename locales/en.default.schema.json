@@ -441,7 +441,10 @@
     "hero_video": "Hero video",
     "collection_slider": "Collection slider",
     "product_showcase_cards": "Product showcase cards",
-    "showcase_card": "Showcase card"
+    "showcase_card": "Showcase card",
+    "collection_list_tabs": "Collection list tabs",
+    "collection_list_tab": "Tab",
+    "collection_list_tab_card": "Collection card"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -802,6 +805,7 @@
     "button": "Button",
     "button_text_case": "Text case",
     "card_height": "Card height",
+    "card_height_mobile": "Card height mobile",
     "card_hover_effect": "Card hover effect",
     "card_image_height": "Product image height",
     "card_size": "Card size",
@@ -1087,6 +1091,7 @@
     // Checkbox label to toggle visibility of UI elements
     "show": "Show",
     "shop_all_label": "Shop all label",
+    "show_arrows": "Show arrows",
     "show_heading": "Show heading",
     "show_as_accordion": "Show as accordion on mobile",
     "show_author": "Author",
@@ -1124,6 +1129,7 @@
     "submenu_size": "Submenu size",
     "success_color": "Success",
     "swatches": "Swatches",
+    "tab_label": "Tab label",
     "tab_1_label": "Tab 1 label",
     "tab_2_label": "Tab 2 label",
     "tertiary_font": "Tertiary font",

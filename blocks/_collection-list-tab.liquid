@@ -1,0 +1,71 @@
+{% doc %}
+  Collection list tab
+
+  A container block representing a single tab panel. Contains child
+  _collection-list-tab-card blocks rendered via content_for 'blocks'.
+
+  @param {Object} block - The block object with tab_label setting
+
+  @example
+  {% content_for 'block', type: '_collection-list-tab', id: 'tab-1' %}
+{% enddoc %}
+
+{%- liquid
+  assign tab_blocks = section.blocks | where: 'type', '_collection-list-tab'
+  assign is_first = false
+  assign panel_index = 0
+  for tb in tab_blocks
+    if tb.id == block.id
+      assign panel_index = forloop.index0
+      if forloop.first
+        assign is_first = true
+      endif
+      break
+    endif
+  endfor
+-%}
+
+<div
+  {{ block.shopify_attributes }}
+  class="collection-list-tabs__panel"
+  id="panel-{{ block.id }}"
+  role="tabpanel"
+  ref="panel"
+  data-testid="collection-list-tab-panel"
+  data-panel-index="{{ panel_index }}"
+  {% unless is_first %}hidden{% endunless %}
+>
+  <div class="collection-list-tabs__scroll-area" ref="scrollArea">
+    <div class="collection-list-tabs__cards">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:names.collection_list_tab",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_collection-list-tab-card"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_label",
+      "label": "t:settings.tab_label",
+      "default": "Tab"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.collection_list_tab"
+    }
+  ]
+}
+{% endschema %}
