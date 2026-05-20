@@ -3,8 +3,8 @@
     "banner_hero_HxK3mP": {
       "type": "banner-hero",
       "settings": {
-        "image_desktop": "shopify://shop_images/export-desktop-1d7551075065.jpg",
-        "image_mobile": "shopify://shop_images/export-mobile-6cfbabfeb789.jpg",
+        "image_desktop": "shopify:\/\/shop_images\/export-desktop-1d7551075065.jpg",
+        "image_mobile": "shopify:\/\/shop_images\/export-mobile-6cfbabfeb789.jpg",
         "lockup_alt": "The Unofficial Summer Kickoff - Up to 25% Off Select Styles",
         "lockup_max_width": 500,
         "toggle_overlay": true,
