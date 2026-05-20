@@ -462,6 +462,83 @@
         "panel_2",
         "panel_3"
       ]
+    },
+    "text_with_icons": {
+      "type": "text-with-icons",
+      "settings": {
+        "icon_width": 72,
+        "gap": 40,
+        "gap_mobile": 24,
+        "section_width": "full-width",
+        "color_scheme": "scheme-8",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/faherty-truck-illustration-1a-ff656776015d.png",
+            "heading": "Free Shipping Over $150",
+            "link_text": "*US domestic orders",
+            "link": "\/pages\/faq#shipping"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/faherty-venice-storefront-illustration-1f-3a7a9697b756.png",
+            "heading": "Find a Store",
+            "link_text": "Visit Us",
+            "link": "\/pages\/store-locator"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/faherty-shipping-box-illustration-87db61c489ea.png",
+            "heading": "Easy Returns",
+            "link_text": "Learn More",
+            "link": "\/pages\/returns"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/faherty-guarantee-badge-1a-13f1dd1630c4.png",
+            "heading": "Guarantee of Quality",
+            "link_text": "Learn More",
+            "link": "\/pages\/quality-guarantee"
+          }
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/oak-leaf-7592aa4bb81d.png",
+            "heading": "Plastic-Free Packaging",
+            "link_text": "Our Impact Commitment",
+            "link": "\/pages\/impact"
+          }
+        },
+        "item_6": {
+          "type": "item",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/recycle-30f728b1-1b7e-40c8-8fa5-e0441899c789-67bbe672170f.png",
+            "heading": "Resale Circularity",
+            "subtitle_prefix": "Sell + Shop ",
+            "link_text": "Secondwave",
+            "link": "https:\/\/secondwave.fahertybrand.com\/"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6"
+      ]
     }
   },
   "order": [
@@ -471,6 +548,7 @@
     "rich_text_byronbay",
     "product_showcase_cards_Dpt01",
     "product_list_fa6P9H",
-    "homepage_slideshow"
+    "homepage_slideshow",
+    "text_with_icons"
   ]
 }

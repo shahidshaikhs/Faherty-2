@@ -1,0 +1,343 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    color-{{ section.settings.color_scheme }}
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+  "
+  data-testid="text-with-icons-section"
+>
+  <div class="text-with-icons-grid">
+    {% for block in section.blocks %}
+      <div class="text-with-icons-grid__item" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <div class="text-with-icons-grid__icon">
+            {{
+              block.settings.image
+              | image_url: width: block.settings.image.width
+              | image_tag:
+                widths: '60,72,82,120,144,164,200',
+                sizes: '(min-width: 750px) 72px, 82px',
+                loading: 'lazy',
+                alt: block.settings.heading,
+                class: 'text-with-icons-grid__icon-img'
+            }}
+          </div>
+        {% endif %}
+
+        <div class="text-with-icons-grid__text">
+          {% if block.settings.heading != blank %}
+            <p class="text-with-icons-grid__heading">
+              {{ block.settings.heading | escape }}
+            </p>
+          {% endif %}
+
+          {% if block.settings.link_text != blank or block.settings.subtitle_prefix != blank %}
+            <p class="text-with-icons-grid__subtitle">
+              {%- if block.settings.subtitle_prefix != blank -%}
+                {{ block.settings.subtitle_prefix | escape }}
+              {%- endif -%}
+              {%- if block.settings.link_text != blank and block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="text-with-icons-grid__link">
+                  {{- block.settings.link_text | escape -}}
+                </a>
+              {%- elsif block.settings.link_text != blank -%}
+                <span class="text-with-icons-grid__link">
+                  {{- block.settings.link_text | escape -}}
+                </span>
+              {%- endif -%}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% style %}
+  .shopify-section-{{ section.id }} {
+    --icon-width: {{ section.settings.icon_width }}px;
+    --twi-gap: {{ section.settings.gap }}px;
+    --twi-gap-mobile: {{ section.settings.gap_mobile }}px;
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .text-with-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--twi-gap);
+    justify-items: center;
+    align-items: start;
+  }
+
+  .text-with-icons-grid__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .text-with-icons-grid__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-with-icons-grid__icon-img {
+    width: var(--icon-width);
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .text-with-icons-grid__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .text-with-icons-grid__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: 14.4px;
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: var(--color-foreground);
+  }
+
+  .text-with-icons-grid__subtitle {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--color-foreground);
+  }
+
+  .text-with-icons-grid__link {
+    color: var(--color-foreground);
+    text-decoration: none;
+    background-image: linear-gradient(to right, currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease-in-out;
+  }
+
+  .text-with-icons-grid__link:hover {
+    background-size: 0% 1px;
+  }
+
+  .text-with-icons-grid__link:focus-visible {
+    outline: 1px auto;
+    outline-offset: 1px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .text-with-icons-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--twi-gap-mobile);
+    }
+
+    .text-with-icons-grid__icon-img {
+      width: calc(var(--icon-width) + 10px);
+    }
+
+    .text-with-icons-grid__text {
+      gap: 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.text_with_icons",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "number",
+      "id": "icon_width",
+      "label": "t:settings.width",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Mobile gap",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-8"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:names.text_with_icons_item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:settings.heading"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_prefix",
+          "label": "Subtitle prefix"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "t:settings.link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.text_with_icons",
+      "settings": {
+        "icon_width": 72,
+        "gap": 40,
+        "gap_mobile": 24,
+        "section_width": "full-width",
+        "color_scheme": "scheme-8",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      },
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Free Shipping Over $150",
+            "link_text": "*US domestic orders"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Find a Store",
+            "link_text": "Visit Us"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Easy Returns",
+            "link_text": "Learn More"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Guarantee of Quality",
+            "link_text": "Learn More"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Plastic-Free Packaging",
+            "link_text": "Our Impact Commitment"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "heading": "Resale Circularity",
+            "subtitle_prefix": "Sell + Shop ",
+            "link_text": "Secondwave"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -446,7 +446,9 @@
     "collection_list_tab": "Tab",
     "collection_list_tab_card": "Collection card",
     "homepage_slideshow": "Homepage slideshow",
-    "panel": "Panel"
+    "panel": "Panel",
+    "text_with_icons": "Text with icons",
+    "text_with_icons_item": "Item"
   },
   "options": {
     "above_carousel": "Above carousel",
