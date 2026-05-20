@@ -1,0 +1,409 @@
+<div
+  id="section-{{ section.id }}"
+  class="hero-video color-{{ section.settings.color_scheme }} section section--full-width"
+>
+  {%- if section.settings.video_desktop != blank -%}
+    <div class="hero-video__media hero-video__media--desktop">
+      {{
+        section.settings.video_desktop
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          class: 'hero-video__video'
+      }}
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.video_mobile != blank -%}
+    <div class="hero-video__media hero-video__media--mobile">
+      {{
+        section.settings.video_mobile
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          class: 'hero-video__video'
+      }}
+    </div>
+  {%- endif -%}
+
+  <div class="hero-video__content">
+    <div class="hero-video__logo">
+      {%- if section.settings.logo_image != blank -%}
+        {{
+          section.settings.logo_image
+          | image_url: width: 600
+          | image_tag:
+            alt: section.settings.logo_alt,
+            loading: 'eager'
+        }}
+      {%- else -%}
+        <img
+          src="{{ 'welcome-to-australia-f87b7105851c.svg' | asset_url }}"
+          alt="{{ section.settings.logo_alt | escape }}"
+          loading="eager"
+        >
+      {%- endif -%}
+    </div>
+
+    <div class="hero-video__buttons">
+      {%- if section.settings.button_1_label != blank -%}
+        <a href="{{ section.settings.button_1_link }}" class="hero-video__button">
+          {{- section.settings.button_1_label | escape -}}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.button_2_label != blank -%}
+        <a href="{{ section.settings.button_2_link }}" class="hero-video__button">
+          {{- section.settings.button_2_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_video_toggle -%}
+    <hero-video-toggle>
+      <button
+        class="hero-video__toggle"
+        type="button"
+        aria-label="{{ 'accessibility.pause_video' | t }}"
+        data-pause-label="{{ 'accessibility.pause_video' | t | escape }}"
+        data-play-label="{{ 'accessibility.play_video' | t | escape }}"
+      >
+        <span class="hero-video__toggle-pause">
+          <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <rect x="1" y="0" width="2" height="10"></rect>
+            <rect x="7" y="0" width="2" height="10"></rect>
+          </svg>
+        </span>
+        <span class="hero-video__toggle-play" hidden>
+          <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <polygon points="1,0 10,5 1,10"></polygon>
+          </svg>
+        </span>
+      </button>
+    </hero-video-toggle>
+  {%- endif -%}
+</div>
+
+{% style %}
+  .shopify-section-{{ section.id }} {
+    --hero-video-height: {{ section.settings.section_height_desktop }}px;
+    --hero-video-height-mobile: {{ section.settings.section_height_mobile }}px;
+    --hero-video-logo-max-width: {{ section.settings.logo_max_width }}px;
+    --hero-video-logo-max-width-mobile: {{ section.settings.logo_max_width_mobile }}px;
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .hero-video {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: var(--hero-video-height, 640px);
+  }
+
+  .hero-video__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-video__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (min-width: 750px) {
+    .hero-video__media--mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hero-video__media--desktop {
+      display: none;
+    }
+  }
+
+  .hero-video__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .hero-video__logo img {
+    max-width: var(--hero-video-logo-max-width, 300px);
+    height: auto;
+    margin: 32px 0;
+  }
+
+  .hero-video__buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-block-start: 16px;
+  }
+
+  .hero-video__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    height: 46px;
+    padding: 15px 20px;
+    min-width: 260px;
+    background: rgb(30, 32, 32);
+    color: rgb(252, 250, 246);
+    border: 1px solid rgb(30, 32, 32);
+    font-family: var(--font-body--family);
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .hero-video__button:hover {
+    border-color: rgba(30, 32, 32, 0.85);
+  }
+
+  .hero-video__button:active {
+    background: rgba(30, 32, 32, 0.925);
+  }
+
+  .hero-video__button:focus-visible {
+    background: rgba(30, 32, 32, 0.45);
+    outline: 1px auto rgb(0, 95, 204);
+    outline-offset: 1px;
+  }
+
+  .hero-video__toggle {
+    position: absolute;
+    bottom: 16px;
+    inset-inline-start: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgb(255, 255, 255);
+    background: transparent;
+    color: rgb(255, 255, 255);
+    z-index: 3;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .hero-video__toggle:focus-visible {
+    outline: 1px auto rgb(0, 95, 204);
+    outline-offset: 1px;
+  }
+
+  .hero-video__toggle svg {
+    width: 10px;
+    height: 10px;
+    fill: none;
+    stroke: none;
+  }
+
+  .hero-video__toggle rect,
+  .hero-video__toggle polygon {
+    fill: currentColor;
+  }
+
+  @media screen and (max-width: 749px) {
+    .hero-video {
+      height: var(--hero-video-height-mobile, 520px);
+    }
+
+    .hero-video__logo img {
+      max-width: var(--hero-video-logo-max-width-mobile, 260px);
+    }
+
+    .hero-video__buttons {
+      flex-direction: column;
+      gap: 20px;
+      margin-block-start: 12px;
+    }
+
+    .hero-video__button {
+      height: 44px;
+      font-size: 12px;
+      line-height: 12px;
+      letter-spacing: 1.2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video__button {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  if (!customElements.get('hero-video-toggle')) {
+    class HeroVideoToggle extends HTMLElement {
+      connectedCallback() {
+        this.button = this.querySelector('.hero-video__toggle');
+        if (!this.button) return;
+
+        this.pauseIcon = this.querySelector('.hero-video__toggle-pause');
+        this.playIcon = this.querySelector('.hero-video__toggle-play');
+        this.isPlaying = true;
+
+        this.button.addEventListener('click', this.handleToggle.bind(this));
+      }
+
+      handleToggle() {
+        const section = this.closest('.hero-video');
+        if (!section) return;
+
+        const videos = section.querySelectorAll('video');
+
+        if (this.isPlaying) {
+          for (const video of videos) {
+            video.pause();
+          }
+          this.pauseIcon.hidden = true;
+          this.playIcon.hidden = false;
+          this.button.setAttribute('aria-label', this.button.dataset.playLabel);
+        } else {
+          for (const video of videos) {
+            video.play();
+          }
+          this.pauseIcon.hidden = false;
+          this.playIcon.hidden = true;
+          this.button.setAttribute('aria-label', this.button.dataset.pauseLabel);
+        }
+
+        this.isPlaying = !this.isPlaying;
+      }
+    }
+
+    customElements.define('hero-video-toggle', HeroVideoToggle);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "t:names.hero_video",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image",
+      "info": "Leave empty to use the bundled SVG."
+    },
+    {
+      "type": "text",
+      "id": "logo_alt",
+      "label": "Logo alt text",
+      "default": "Welcome to Australia"
+    },
+    {
+      "type": "number",
+      "id": "logo_max_width",
+      "label": "Logo max width",
+      "default": 300
+    },
+    {
+      "type": "number",
+      "id": "logo_max_width_mobile",
+      "label": "Logo max width mobile",
+      "default": 260
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 label",
+      "default": "MEN'S NEW ARRIVALS"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 label",
+      "default": "WOMEN'S NEW ARRIVALS"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "section_height_desktop",
+      "label": "Section height desktop",
+      "default": 640
+    },
+    {
+      "type": "number",
+      "id": "section_height_mobile",
+      "label": "Section height mobile",
+      "default": 520
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_toggle",
+      "label": "Show video toggle",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.hero_video"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
