@@ -234,7 +234,8 @@
     "video_autoplay": "Videos will be muted by default",
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
-    "media_type_info": "Features are populated from your menu links"
+    "media_type_info": "Features are populated from your menu links",
+    "lockup_image_info": "Leave empty to use the bundled SVG."
   },
   "names": {
     "column": "Column",
@@ -435,7 +436,8 @@
     "video_section": "Video",
     "view_all_button": "View all",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider"
+    "comparison_slider": "Comparison slider",
+    "banner_hero": "Banner hero"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -1177,7 +1179,13 @@
     "text_on_images": "Text on images",
     "x_position": "Horizontal position",
     "y_position": "Vertical position",
-    "wishlist_url": "Wishlist URL"
+    "wishlist_url": "Wishlist URL",
+    "desktop_image": "Desktop image",
+    "mobile_image": "Mobile image",
+    "lockup_image": "Lockup image",
+    "lockup_alt": "Lockup alt text",
+    "lockup_max_width": "Lockup max width",
+    "link_url": "Link"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
