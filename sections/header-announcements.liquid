@@ -36,6 +36,14 @@
   </announcement-bar-component>
 </aside>
 
+{% style %}
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .announcement-bar.spacing-style {
+      padding-block: 10px;
+    }
+  }
+{% endstyle %}
+
 {% stylesheet %}
   .announcement-bar {
     border-block-end: var(--border-bottom-width) solid var(--color-border);
