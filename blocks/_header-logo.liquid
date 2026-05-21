@@ -39,8 +39,13 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
-    assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
+    if settings.logo != blank
+      assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
+      assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
+    else
+      assign logo_width = settings.logo_height | times: 100 | divided_by: 16
+      assign logo_width_mobile = settings.logo_height_mobile | times: 100 | divided_by: 16
+    endif
     assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
     assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
     assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
@@ -51,13 +56,23 @@
     class="header-logo__image-container header-logo__image-container--original"
     data-testid="header-logo"
   >
-    {% render 'image',
-      image: settings.logo,
-      class: 'header-logo__image',
-      height: settings.logo_height,
-      text_fallback: shop.name,
-      style: logo_style
-    %}
+    {% if settings.logo != blank %}
+      {% render 'image',
+        image: settings.logo,
+        class: 'header-logo__image',
+        height: settings.logo_height,
+        text_fallback: shop.name,
+        style: logo_style
+      %}
+    {% else %}
+      <span
+        class="header-logo__image header-logo__image--svg"
+        style="{{ logo_style }}"
+        aria-label="{{ shop.name }}"
+      >
+        {{ 'faherty-logo.svg' | inline_asset_content }}
+      </span>
+    {% endif %}
   </span>
 
   {% if use_inverse_logo %}
@@ -125,6 +140,23 @@
     @media screen and (min-width: 750px) {
       height: var(--header-logo-image-height);
       width: var(--header-logo-image-width);
+    }
+  }
+
+  .header-logo__image--svg {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    svg {
+      display: block;
+      height: var(--header-logo-image-height-mobile);
+      width: var(--header-logo-image-width-mobile);
+
+      @media screen and (min-width: 750px) {
+        height: var(--header-logo-image-height);
+        width: var(--header-logo-image-width);
+      }
     }
   }
 
