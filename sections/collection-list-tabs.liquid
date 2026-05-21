@@ -78,7 +78,6 @@
   }
 
   .collection-list-tabs__wrapper {
-    padding-inline: var(--clt-inline-padding, 48px);
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -101,6 +100,7 @@
   .collection-list-tabs__tab-header {
     display: flex;
     margin-block-end: 16px;
+    padding-inline: var(--clt-inline-padding, 48px);
   }
 
   .collection-list-tabs__tab-buttons {
@@ -199,15 +199,14 @@
     position: relative;
   }
 
-  /* Scroll Area — bleed pattern */
+  /* Scroll Area */
   .collection-list-tabs__scroll-area {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin-inline: calc(-1 * var(--clt-inline-padding, 48px));
-    padding-inline: var(--clt-inline-padding, 48px);
+    padding-inline-start: var(--clt-inline-padding, 48px);
   }
 
   .collection-list-tabs__scroll-area::-webkit-scrollbar {
@@ -301,6 +300,7 @@
     align-items: center;
     gap: 40px;
     margin-block-start: 16px;
+    padding-inline: var(--clt-inline-padding, 48px);
   }
 
   .collection-list-tabs__progress-track {
