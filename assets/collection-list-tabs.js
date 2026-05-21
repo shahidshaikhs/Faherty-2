@@ -2,8 +2,8 @@ import { Component } from '@theme/component';
 
 /**
  * @typedef {Object} CollectionListTabsRefs
- * @property {HTMLButtonElement[]} tab - Tab buttons
- * @property {HTMLElement[]} panel - Tab panels
+ * @property {HTMLElement} tabButtonsContainer - Container for dynamically built tab buttons
+ * @property {HTMLElement[]} panel - Tab panels (from _collection-list-tab blocks)
  * @property {HTMLElement[]} scrollArea - Scroll containers inside panels
  * @property {HTMLElement} progressTrack - Progress bar track
  * @property {HTMLElement} progressBar - Progress bar fill
@@ -24,6 +24,7 @@ class CollectionListTabs extends Component {
 
   connectedCallback() {
     super.connectedCallback();
+    this.#buildTabs();
     this.#initScrollListener();
     this.#updateArrowState();
     this.#initObserver();
@@ -44,27 +45,68 @@ class CollectionListTabs extends Component {
   }
 
   /**
+   * Build tab navigation from panel data-tab-label attributes.
+   * This avoids relying on section.blocks (unreliable in theme block architecture).
+   */
+  #buildTabs() {
+    const panels = this.#getPanels();
+    const tabContainer = this.refs.tabButtonsContainer;
+
+    if (!tabContainer || panels.length === 0) return;
+
+    // Clear any existing buttons (handles re-init in the Shopify editor)
+    tabContainer.innerHTML = '';
+
+    panels.forEach((panel, index) => {
+      const label = panel.dataset.tabLabel || `Tab ${index + 1}`;
+
+      // Stamp panel index so handleTabClick can identify it
+      panel.dataset.panelIndex = String(index);
+
+      // Show first panel, hide the rest
+      if (index === 0) {
+        panel.removeAttribute('hidden');
+      } else {
+        panel.setAttribute('hidden', '');
+      }
+
+      // Create tab button
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `collection-list-tabs__tab-button${index === 0 ? ' active' : ''}`;
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-selected', String(index === 0));
+      button.setAttribute('aria-controls', panel.id);
+      button.dataset.index = String(index);
+      button.textContent = label;
+      button.addEventListener('click', (e) => this.handleTabClick(e));
+
+      tabContainer.appendChild(button);
+    });
+  }
+
+  /**
    * Handle tab click — switch active tab and panel
-   * @param {Event} event
+   * @param {MouseEvent} event
    */
   handleTabClick(event) {
-    const button = event.currentTarget;
+    const button = /** @type {HTMLButtonElement} */ (event.currentTarget);
     const index = parseInt(button.dataset.index, 10);
 
     if (index === this.#activeIndex) return;
-
     this.#activeIndex = index;
 
-    const tabs = Array.isArray(this.refs.tab) ? this.refs.tab : [this.refs.tab];
-    const panels = Array.isArray(this.refs.panel) ? this.refs.panel : [this.refs.panel];
-
+    // Update all tab buttons
+    const tabs = this.querySelectorAll('.collection-list-tabs__tab-button');
     for (const tab of tabs) {
-      const tabIndex = parseInt(tab.dataset.index, 10);
+      const tabIndex = parseInt(/** @type {HTMLElement} */ (tab).dataset.index, 10);
       const isActive = tabIndex === index;
       tab.classList.toggle('active', isActive);
       tab.setAttribute('aria-selected', String(isActive));
     }
 
+    // Update panels
+    const panels = this.#getPanels();
     for (const panel of panels) {
       const panelIndex = parseInt(panel.dataset.panelIndex, 10);
       const isActive = panelIndex === index;
@@ -80,9 +122,8 @@ class CollectionListTabs extends Component {
     this.#updateProgressBar();
     this.#updateArrowState();
 
-    // Reset scroll position of new active panel
+    // Reset scroll position of newly-active panel
     const activeScrollArea = this.#getActiveScrollArea();
-
     if (activeScrollArea) {
       activeScrollArea.scrollLeft = 0;
     }
@@ -111,6 +152,15 @@ class CollectionListTabs extends Component {
   }
 
   /**
+   * Get all panel elements
+   * @returns {HTMLElement[]}
+   */
+  #getPanels() {
+    if (!this.refs.panel) return [];
+    return Array.isArray(this.refs.panel) ? this.refs.panel : [this.refs.panel];
+  }
+
+  /**
    * Get the scroll width of one card (including gap)
    * @param {HTMLElement} scrollArea
    * @returns {number}
@@ -130,9 +180,11 @@ class CollectionListTabs extends Component {
    * @returns {HTMLElement | null}
    */
   #getActiveScrollArea() {
-    const scrollAreas = Array.isArray(this.refs.scrollArea)
-      ? this.refs.scrollArea
-      : [this.refs.scrollArea];
+    const scrollAreas = this.refs.scrollArea
+      ? Array.isArray(this.refs.scrollArea)
+        ? this.refs.scrollArea
+        : [this.refs.scrollArea]
+      : [];
 
     return scrollAreas[this.#activeIndex] || null;
   }

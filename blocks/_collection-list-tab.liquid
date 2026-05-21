@@ -10,21 +10,6 @@
   {% content_for 'block', type: '_collection-list-tab', id: 'tab-1' %}
 {% enddoc %}
 
-{%- liquid
-  assign tab_blocks = section.blocks | where: 'type', '_collection-list-tab'
-  assign is_first = false
-  assign panel_index = 0
-  for tb in tab_blocks
-    if tb.id == block.id
-      assign panel_index = forloop.index0
-      if forloop.first
-        assign is_first = true
-      endif
-      break
-    endif
-  endfor
--%}
-
 <div
   {{ block.shopify_attributes }}
   class="collection-list-tabs__panel"
@@ -32,8 +17,8 @@
   role="tabpanel"
   ref="panel"
   data-testid="collection-list-tab-panel"
-  data-panel-index="{{ panel_index }}"
-  {% unless is_first %}hidden{% endunless %}
+  data-tab-label="{{ block.settings.tab_label | escape }}"
+  hidden
 >
   <div class="collection-list-tabs__scroll-area" ref="scrollArea">
     <div class="collection-list-tabs__cards">

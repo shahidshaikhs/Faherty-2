@@ -1,5 +1,4 @@
 {%- liquid
-  assign tab_blocks = section.blocks | where: 'type', '_collection-list-tab'
   assign section_width = section.settings.section_width | default: 'full-width'
   assign color_scheme = section.settings.color_scheme | default: 'scheme-1'
   assign show_arrows = section.settings.show_arrows
@@ -11,29 +10,12 @@
     style="{% render 'spacing-style', settings: section.settings %}"
   >
   <div class="collection-list-tabs__wrapper collection-list-tabs__animate">
-    {%- if tab_blocks.size > 0 -%}
-      <div class="collection-list-tabs__tab-header">
-        <div class="collection-list-tabs__tab-buttons" role="tablist">
-          {%- for tab_block in tab_blocks -%}
-            <button
-              ref="tab"
-              role="tab"
-              type="button"
-              class="collection-list-tabs__tab-button{% if forloop.first %} active{% endif %}"
-              aria-selected="{{ forloop.first }}"
-              aria-controls="panel-{{ tab_block.id }}"
-              data-index="{{ forloop.index0 }}"
-              on:click="/handleTabClick"
-            >
-              {{- tab_block.settings.tab_label | escape -}}
-            </button>
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
+    <div class="collection-list-tabs__tab-header">
+      <div class="collection-list-tabs__tab-buttons" role="tablist" ref="tabButtonsContainer"></div>
+    </div>
 
     <div class="collection-list-tabs__panels-container">
-      <div class="collection-list-tabs__panels" data-panel-count="{{ tab_blocks.size }}">
+      <div class="collection-list-tabs__panels">
         {% content_for 'blocks' %}
       </div>
 
